@@ -12,14 +12,20 @@ public class Main {
     private  static final String outPatch="out.txt";
     private static Path paths=Paths.get(outPatch);
     private static String in;
+    private static boolean isFile;
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        try {
-            printable();
-        } catch (IOException e) {
-            System.out.println(e.toString());
+
+        if(args.length>0){
+            isFile=true;
+        }else {
+            try {
+                printable();
+            } catch (IOException e) {
+                System.out.println(e.toString());
+            }
         }
+
     }
 
     static void printable() throws IOException {

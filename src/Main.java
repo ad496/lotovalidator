@@ -13,7 +13,6 @@ public class Main {
     private  static final String outPatch="out.txt";
     private static Path paths=Paths.get(outPatch);
     private static String in;
-    private static boolean isFile;
     protected static AtomicBoolean atomicBoolean=new AtomicBoolean(false);
 
     public static void main(String[] args) {
@@ -49,11 +48,7 @@ public class Main {
         }
         File classpathRoot = new File(System.getProperty("user.dir"));
 
-        File[] temp = classpathRoot.listFiles(new FilenameFilter() {
-            @Override public boolean accept(File dir, String name) {
-                return name.endsWith(".txt");
-            }
-        });
+        File[] temp = classpathRoot.listFiles((dir, name) -> name.endsWith(".txt"));
         if(temp.length==0){
             addFileOut("Не найден текстовый файл с серверными строками");
             return;
@@ -66,11 +61,7 @@ public class Main {
             return;
         }
         in=temp[0].getName();
-        File[] cexcelFiles = classpathRoot.listFiles(new FilenameFilter() {
-            @Override public boolean accept(File dir, String name) {
-                return name.endsWith(".xlsx");
-            }
-        });
+        File[] cexcelFiles = classpathRoot.listFiles((dir, name) -> name.endsWith(".xlsx"));
         Files.write(paths,("Проверка соответствия "+new Date().toString()).getBytes());
         if(cexcelFiles.length==0){
             addFileOut("не могу найти файл столото.");

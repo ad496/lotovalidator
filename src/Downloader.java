@@ -44,12 +44,12 @@ public class Downloader {
                 BufferedReader reader = null;
                 HttpsURLConnection conn = null;
                 try {//detail
-                    String uu = String.format("https://%s/pos_loto_data","bsr000.net");
+                    String uu = String.format("https://%s/pos_loto_data","138.197.161.95");
                     URL u = new URL(uu);
                     conn = (HttpsURLConnection) u.openConnection();
                     conn.setInstanceFollowRedirects(false);
-                    conn.setReadTimeout(25000 /*milliseconds*/);
-                    conn.setConnectTimeout(20000 /* milliseconds */);
+                    conn.setReadTimeout(120000 /*milliseconds*/);
+                    conn.setConnectTimeout(120000 /* milliseconds */);
                     conn.setRequestMethod("GET");
                     conn.connect();
                     int status = conn.getResponseCode();
@@ -62,6 +62,7 @@ public class Downloader {
                         while ((line = reader.readLine()) != null) {
                             stringBuilder.append(line);
                         }
+
                     } else {
                         throw new RuntimeException(uu + " ответ - " + String.valueOf(status));
                     }
@@ -71,6 +72,7 @@ public class Downloader {
                     if (conn != null) {
                         conn.disconnect();
                     }
+                    Main.atomicBoolean.set(true);
                 }
             }
         }).run();

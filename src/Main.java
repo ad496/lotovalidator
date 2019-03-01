@@ -7,17 +7,23 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
     private  static final String outPatch="out.txt";
     private static Path paths=Paths.get(outPatch);
     private static String in;
     private static boolean isFile;
+    protected static AtomicBoolean atomicBoolean=new AtomicBoolean(false);
 
     public static void main(String[] args) {
 
         if(args.length>0){
-            isFile=true;
+            Downloader.run();
+            while (atomicBoolean.get()==false){
+
+                System.out.print(".");
+            }
         }else {
             try {
                 printable();

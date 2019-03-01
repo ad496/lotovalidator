@@ -20,10 +20,17 @@ public class Main {
 
         if(args.length>0){
             Downloader.run();
+
             while (atomicBoolean.get()==false){
 
-                System.out.print(".");
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.print("*");
             }
+            System.exit(0);
         }else {
             try {
                 printable();
